@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { JwtModule } from '@nestjs/jwt';
 
 // Controllers
 import { 
@@ -29,8 +30,12 @@ import {
 } from './business/services';
 
 
+
 @Module({
-  imports: [],
+  imports: [JwtModule.register({
+    secret: 'process.env.JWT_SECRET',
+    signOptions: { expiresIn: '1h'}}
+  )],
   controllers: [
     SecurityController,
     AccountController,

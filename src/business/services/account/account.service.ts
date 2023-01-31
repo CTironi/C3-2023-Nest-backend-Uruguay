@@ -16,8 +16,8 @@ export class AccountService {
    * @memberof AccountService
    */
   createAccount(account: CreateAccountDto): AccountEntity {
-    const customerId = new CustomerEntity
-    customerId.id = account.customerId
+    const customerId = new CustomerEntity();
+    customerId.id = account.customerId;
 
     const accountTypeId = new AccountTypeEntity();
     accountTypeId.id = account.accountTypeId;

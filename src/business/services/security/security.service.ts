@@ -1,3 +1,4 @@
+import { JwtService } from '@nestjs/jwt/dist';
 // Libraries
 import {
     Injectable,
@@ -22,12 +23,14 @@ import {
     CustomerEntity,
     DocumentTypeEntity,
   } from '../../../data/persistence';
+
   
   @Injectable()
   export class SecurityService {
     constructor(
       private readonly customerRepository: CustomerRepository,
       private readonly accountService: AccountService,
+      private jwtService: JwtService
     ) {}
   
     /**
@@ -42,7 +45,7 @@ import {
         user.username,
         user.password,
       );
-      if (answer) return 'Falta retornar un JWT';
+      if (answer) return this.jwtService.sign(user);
       else throw new UnauthorizedException();
     }
   
@@ -77,7 +80,7 @@ import {
   
         const account = this.accountService.createAccount(newAccount);      
   
-        if (account) return 'Falta retornar un JWT';
+        if (account) return this.jwtService.sign(user);
         else throw new InternalServerErrorException();
       } else throw new InternalServerErrorException();
     }
@@ -91,4 +94,6 @@ import {
     signOut(JWToken: string): void {
       throw new Error('Method not implemented.');
     }
+
+  
   }
