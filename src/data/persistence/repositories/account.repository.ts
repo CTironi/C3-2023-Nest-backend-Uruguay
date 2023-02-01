@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 
 import { PaginationModel } from '../../models';
 import { AccountEntity } from '../entities';
@@ -60,11 +60,44 @@ export class AccountRepository
     }
 
     findOneById(id: string): AccountEntity {
-        const currentEntity = this.database.find(
-            (item) => item.id === id && typeof item.daletedAt === 'undefined',
-        );
-        if(!currentEntity ) throw new NotFoundException();
-        return currentEntity;
+
+        try {
+
+            const index = this.findIndexById(id);
+
+            if (index == -1) {
+                throw new NotFoundException();
+            }
+
+            return this.database[index];
+
+        } catch (err) { 
+
+            throw new InternalServerErrorException(`Internal Error! (${err})`)
+        }
+    }
+
+
+    /**
+     * Search in the DB for an element with the given ID 
+     * @param id unique key identifier to find
+     * @returns the index or an exception
+     */
+    findIndexById(id: string): number {
+            
+        try{
+
+            const index = this.database.findIndex(account => account.id === id 
+                            && typeof account.daletedAt === 'undefined' ) ; 
+
+            if(index == -1) { throw new NotFoundException(); }
+
+            return index; 
+
+        }catch(err){
+
+            throw new InternalServerErrorException(`Internal Error! (${err})`)
+        }
     }
 
     findByState(state: boolean): AccountEntity[] {
