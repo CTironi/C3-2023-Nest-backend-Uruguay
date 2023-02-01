@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 
 import { CustomerEntity } from '../entities';
 import { BaseRepository } from './base';
@@ -50,11 +50,26 @@ private softDelete(index: number): void {
     this.database[index].daletedAt = Date.now();
 }
 
-  findAll(paginator: PaginationModel): CustomerEntity[] {
-    const { offset=0, limit=10 } = paginator;
-    return this.database.filter(
-      (itemDel) => typeof itemDel.daletedAt === 'undefined')
-      .slice(offset, offset + limit);
+  findAll(paginator?: PaginationModel): CustomerEntity[] {
+    try{ 
+        
+      let result = this.database.filter( entity => typeof entity.daletedAt === 'undefined');
+      
+      if( result.length <= 0){ 
+          throw new NotFoundException(); 
+      }
+
+      if (paginator) {
+          let { offset = 0, limit = 0 } = paginator;
+          result = result.slice(offset, offset + limit);
+      }  
+
+      return result;
+
+  } catch (err){
+
+      throw new InternalServerErrorException(`Internal Error! (${err})`)
+  }
   }
 
   findOneById(id: string): CustomerEntity {
