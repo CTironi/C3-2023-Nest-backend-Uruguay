@@ -52,11 +52,27 @@ export class AccountRepository
         this.database[index].daletedAt = Date.now();
     }
 
-    findAll(paginator: PaginationModel): AccountEntity[] {
-        const { offset=0, limit=10 } = paginator;
-        return this.database.filter(
-            (item) => typeof item.daletedAt === 'undefined')
-            .slice(offset, offset + limit);
+    findAll(paginator?: PaginationModel): AccountEntity[] {
+                
+        try{ 
+        
+            let result = this.database.filter( entity => typeof entity.daletedAt === 'undefined');
+            
+            if( result.length <= 0){ 
+                throw new NotFoundException(); 
+            }
+
+            if (paginator) {
+                let { offset = 0, limit = 0 } = paginator;
+                result = result.slice(offset, offset + limit);
+            }  
+    
+            return result;
+
+        } catch (err){
+
+            throw new InternalServerErrorException(`Internal Error! (${err})`)
+        }
     }
 
     findOneById(id: string): AccountEntity {

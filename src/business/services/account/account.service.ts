@@ -39,6 +39,10 @@ export class AccountService {
     return this.accountRepository.findOneById(accountId).balance;
   }
 
+  getAllAccounts(): AccountEntity[] {
+    return this.accountRepository.findAll();
+  }
+
   /**
    * Agregar balance a una cuenta
    *

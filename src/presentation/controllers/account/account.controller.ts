@@ -18,6 +18,11 @@ export class AccountController {
         return this.accountService.getBalance(accountId);
     }
 
+    @Get('getAll')
+    getAll(): AccountEntity[] {
+        return this.accountService.getAllAccounts();
+    }
+
     @Post('addBalance/:id')
     addBalance(@Param('id', ParseUUIDPipe) accountId: string,@Body()  amount: number): void {
         return this.accountService.addBalance(accountId, amount);
