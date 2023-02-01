@@ -13,6 +13,11 @@ export class CustomerController {
         return this.customerService.getCustomerInfo(customerId);
     }
 
+    @Get('getAll')
+    getCustomers(): CustomerEntity[]{
+        return this.customerService.getAll();
+    }
+
     @Put('updateCustomer/:id')
     updatedCustomer(@Param('id', ParseUUIDPipe) id: string,@Body() customer: CustomerModel): CustomerEntity {
         return this.customerService.updatedCustomer(id, customer);

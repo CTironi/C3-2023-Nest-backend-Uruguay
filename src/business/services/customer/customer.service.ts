@@ -17,6 +17,10 @@ export class CustomerService {
     return this.customerRepository.findOneById(customerId); 
   }
 
+  getAll(): CustomerEntity[] {
+    return this.customerRepository.findAll(); 
+  }
+
   /**
    * Actualizar información de un cliente
    *
