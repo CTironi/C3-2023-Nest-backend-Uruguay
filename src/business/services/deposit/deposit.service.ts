@@ -2,11 +2,15 @@ import { Injectable } from '@nestjs/common';
 
 import { AccountEntity, DataRangeModel, DepositEntity, DepositRepository, PaginationModel } from '../../../data';
 import { CreateDepositDto } from '../../dtos';
+import { AccountService } from '../account';
+import { AccountRepository } from '../../../data/persistence/repositories/account.repository';
 
 
 @Injectable()
 export class DepositService {
-  constructor(private readonly depositRepository: DepositRepository) {}
+  constructor(private readonly depositRepository: DepositRepository,
+              private readonly accountRepository: AccountRepository
+              ) {}
   /**
    * Crear un deposito
    *
@@ -15,14 +19,16 @@ export class DepositService {
    * @memberof DepositService
    */
   createDeposit(deposit: CreateDepositDto): DepositEntity {
-    const accountId = new AccountEntity
-    accountId.id = deposit.accountId
+    
+    const account = this.accountRepository.findOneById(deposit.accountId)
+    account.balance = deposit.amount
 
     const newDeposit = new DepositEntity();
-    newDeposit.accountId = accountId;
+    newDeposit.accountId = account;
     newDeposit.amount = deposit.amount;
-    newDeposit.dateTime = deposit.dateTime
+
     return this.depositRepository.register(newDeposit);
+
   }
 
   /**
