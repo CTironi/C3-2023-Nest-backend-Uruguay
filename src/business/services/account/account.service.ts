@@ -9,8 +9,9 @@ import { CustomerService } from '../customer';
 @Injectable()
 export class AccountService {
   constructor(private readonly accountRepository: AccountRepository,
-    private readonly accountTypeRepository: AccountTypeRepository,
-    private readonly customerService: CustomerService) {}
+              private readonly accountTypeRepository: AccountTypeRepository,
+              private readonly customerService: CustomerService
+              ) {}
 
   /**
    * Crear una cuenta
@@ -86,7 +87,7 @@ export class AccountService {
    * @memberof AccountService
    */
   verifyAmountIntoBalance(accountId: string, amount: number): boolean {
-    if(this.accountRepository.findOneById(accountId).balance < amount){
+    if(this.accountRepository.findOneById(accountId).balance > amount){
       return true;
     }return false;
   }

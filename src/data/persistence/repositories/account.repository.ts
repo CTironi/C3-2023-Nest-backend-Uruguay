@@ -37,15 +37,15 @@ export class AccountRepository
 
         if(!index ) throw new NotFoundException();
 
-        if (soft) {
-            this.softDelete(index);
+        if (soft = true) {
+            return this.softDelete(index);
         } else {
-            this.hardDelete(index);
+            return this.hardDelete(index);
         }
     }
 
     private hardDelete(index: number): void {
-        this.database.splice(index, 1);
+        this.database.splice(index);
     }
 
     private softDelete(index: number): void {

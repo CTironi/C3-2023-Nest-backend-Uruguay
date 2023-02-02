@@ -45,7 +45,7 @@ import {
         user.username,
         user.password,
       );
-      if (answer) return this.jwtService.sign(user);
+      if (answer) return this.jwtService.sign(user, { secret: "Sofka", expiresIn: "30d" });
       else throw new UnauthorizedException();
     }
   
@@ -80,7 +80,7 @@ import {
   
         const account = this.accountService.createAccount(newAccount);      
   
-        if (account) return this.jwtService.sign(user);
+        if (account) return this.jwtService.sign(user, { secret: "Sofka", expiresIn: "30d" });
         else throw new InternalServerErrorException();
       } else throw new InternalServerErrorException();
     }
@@ -92,7 +92,12 @@ import {
      * @memberof SecurityService
      */
     signOut(JWToken: string): void {
-      throw new Error('Method not implemented.');
+      try {
+        const token = this.jwtService.verify(JWToken, { secret: "Sofka" });
+        return token;
+      } catch {
+        console.log("Logging Out!");
+      }
     }
 
   

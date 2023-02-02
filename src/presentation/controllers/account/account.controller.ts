@@ -1,12 +1,14 @@
-import { Body, Controller, Delete, Get, Param, ParseBoolPipe, ParseFloatPipe, ParseUUIDPipe, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, InternalServerErrorException, Param, ParseBoolPipe, ParseFloatPipe, ParseUUIDPipe, Post, Put, Query } from '@nestjs/common';
 
 import { AccountService, CreateAccountDto } from '../../../business';
-import { AccountEntity, AccountTypeEntity } from '../../../data';
+import { AccountEntity, AccountRepository, AccountTypeEntity } from '../../../data';
 
 
 @Controller('account')
 export class AccountController {
-    constructor(private readonly accountService: AccountService) { }
+    constructor(private readonly accountService: AccountService,
+                private readonly accountRepository: AccountRepository
+        ) { }
 
     @Post('createAccount')
     createAccount(@Body() createAccount: CreateAccountDto): AccountEntity {
@@ -29,13 +31,13 @@ export class AccountController {
         return this.accountService.addBalance(accountId, amount);
     }
 
-    @Post('removeBalance/:id')
-    removeBalance(@Param('id', ParseUUIDPipe) accountId: string,@Body()  amount: number): AccountEntity {
+    @Post('removeBalance/:id/:amount')
+    removeBalance(@Param('id', ParseUUIDPipe) accountId: string,@Param('amount', ParseFloatPipe) amount: number): AccountEntity {
         return this.accountService.removeBalance(accountId, amount);
     }
 
-    @Get('verifyAmount/:id')
-    verifyAmountIntoBalance(@Param('id', ParseUUIDPipe) accountId: string, amount: number): boolean {
+    @Get('verifyAmount/:id/:amount')
+    verifyAmountIntoBalance(@Param('id', ParseUUIDPipe) accountId: string,@Param('amount', ParseFloatPipe) amount: number): boolean {
         return this.accountService.verifyAmountIntoBalance(accountId, amount);
     }
 
@@ -59,8 +61,16 @@ export class AccountController {
         return this.accountService.changeAccountType(accountId, accountTypeId);
     }
 
-    @Delete('deleteAccount/:id')
-    deleteAccount(@Param('id', ParseUUIDPipe) accountId: string,@Query('soft', ParseBoolPipe) soft?: boolean): void {
-        return this.accountService.deleteAccount(accountId, soft);
-    }
+    @Delete('deleteAccount/:id/:soft')
+    deleteAccount(@Param('id', ParseUUIDPipe) accountId: string,@Param('soft', ParseBoolPipe) soft: boolean): void {
+        if(this.getBalance(accountId) === 0){
+
+            this.accountRepository.delete(accountId, soft); 
+
+        }else{
+            
+            throw new InternalServerErrorException("Account is not Empty!. Delete Canceled");
+        }
+
+        }
 }
