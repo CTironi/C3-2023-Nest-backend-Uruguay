@@ -1,13 +1,16 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 
 
-import { AccountEntity, AccountRepository, AccountTypeEntity, CustomerEntity } from '../../../data/persistence';
+import { AccountEntity, AccountRepository, AccountTypeEntity, AccountTypeRepository} from '../../../data/persistence';
 import { CreateAccountDto } from '../../dtos';
-import { IsDate } from 'class-validator';
+import { CustomerService } from '../customer';
+
 
 @Injectable()
 export class AccountService {
-  constructor(private readonly accountRepository: AccountRepository) {}
+  constructor(private readonly accountRepository: AccountRepository,
+    private readonly accountTypeRepository: AccountTypeRepository,
+    private readonly customerService: CustomerService) {}
 
   /**
    * Crear una cuenta
@@ -17,12 +20,11 @@ export class AccountService {
    * @memberof AccountService
    */
   createAccount(account: CreateAccountDto): AccountEntity {
-    const customerId = new CustomerEntity();
-    customerId.id = account.customerId;
+    const customerId = this.customerService.getCustomerInfo(account.customerId);
 
     const accountTypeId = new AccountTypeEntity();
-    accountTypeId.id = account.accountTypeId;
-
+    accountTypeId.name = account.accountTypeName;
+    this.accountTypeRepository.register(accountTypeId);
 
     const newAccount = new AccountEntity();
     newAccount.customerId = customerId;

@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { AccountEntity, AccountRepository, DataRangeModel, PaginationModel, TransferEntity, TransferRepository } from 'src/data';
+import { DataRangeModel, PaginationModel, TransferEntity, TransferRepository } from '../../../data';
 
 
 import { CreateTrasferDto } from '../../dtos';
@@ -78,7 +78,7 @@ export class TransferService {
    */
   getHistory(
     accountId: string,
-    pagination: PaginationModel,
+    pagination?: PaginationModel,
     dataRange?: DataRangeModel,
   ): TransferEntity[] {
     if (dataRange){

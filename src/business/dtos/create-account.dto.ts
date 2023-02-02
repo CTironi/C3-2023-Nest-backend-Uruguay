@@ -6,7 +6,7 @@ export class CreateAccountDto {
     @IsNotEmpty({ message: "This slot must not be empty."})
     customerId: string;
 
-    @IsUUID(4, { message: "This must to be uuid." })
+
     @IsNotEmpty({ message: "This slot must not be empty."})
-    accountTypeId: string;
+    accountTypeName: string;
 }
