@@ -33,19 +33,16 @@ export class AccountRepository
 
     delete(id: string, soft?: boolean): void {
 
-        const index = this.database.findIndex(itemIndex => itemIndex.id === id);
-
-        if(!index ) throw new NotFoundException();
-
-        if (soft = true) {
-            return this.softDelete(index);
-        } else {
-            return this.hardDelete(index);
-        }
+        let finded = this.database.findIndex(
+            (item) => 
+                item.id == id
+        );
+        if (finded == undefined) throw new NotFoundException();
+        soft ? this.softDelete(finded) : this.hardDelete(finded);
     }
 
     private hardDelete(index: number): void {
-        this.database.splice(index);
+        this.database.splice(index, 1);
     }
 
     private softDelete(index: number): void {
