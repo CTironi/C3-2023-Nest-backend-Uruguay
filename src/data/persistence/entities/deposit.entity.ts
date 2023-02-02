@@ -6,6 +6,6 @@ export class DepositEntity implements DepositModel {
     id = uuid();
     accountId: AccountModel;
     amount: number;
-    dateTime: Date;
+    dateTime = new Date();
     daletedAt: number | Date ;
 }

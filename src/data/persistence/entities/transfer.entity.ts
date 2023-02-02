@@ -8,6 +8,6 @@ export class TransferEntity implements TransferModel {
     income: AccountModel;
     amount: number;
     reason: string;
-    dateTime = Date.now();
+    dateTime = new Date();
     daletedAt: number | Date;
 }
