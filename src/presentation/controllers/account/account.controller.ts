@@ -1,18 +1,30 @@
-import { Body, Controller, Delete, Get, InternalServerErrorException, Param, ParseBoolPipe, ParseFloatPipe, ParseUUIDPipe, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, InternalServerErrorException, Logger, Param, ParseBoolPipe, ParseFloatPipe, ParseUUIDPipe, Post, Put, Query } from '@nestjs/common';
 
 import { AccountService, CreateAccountDto } from '../../../business';
 import { AccountEntity, AccountRepository, AccountTypeEntity } from '../../../data';
+import { ObservableHandler } from '../../../common/ob/observable.handler';
 
 
 @Controller('account')
-export class AccountController {
+export class AccountController extends ObservableHandler{
     constructor(private readonly accountService: AccountService,
                 private readonly accountRepository: AccountRepository
-        ) { }
+        ) { 
+            super();
+        }
+
+    private logger = new Logger('AccountController')
+
 
     @Post('createAccount')
     createAccount(@Body() createAccount: CreateAccountDto): AccountEntity {
-        return this.accountService.createAccount(createAccount);
+        const newAccount: AccountEntity = this.accountService.createAccount(createAccount);
+
+        this.handler(newAccount).subscribe(accountCreated => {
+            this.logger.log('Account created : ${accountCreated}')
+        });
+
+        return newAccount;
     }
 
     @Get('getBalance/:id')

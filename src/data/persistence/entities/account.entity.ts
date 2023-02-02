@@ -10,3 +10,4 @@ export class AccountEntity implements AccountModel {
     state = true;
     daletedAt: number | Date;
 }
+
