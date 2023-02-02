@@ -3,6 +3,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { AccountEntity, AccountRepository, AccountTypeEntity, CustomerEntity } from '../../../data/persistence';
 import { CreateAccountDto } from '../../dtos';
+import { IsDate } from 'class-validator';
 
 @Injectable()
 export class AccountService {
@@ -21,6 +22,7 @@ export class AccountService {
 
     const accountTypeId = new AccountTypeEntity();
     accountTypeId.id = account.accountTypeId;
+
 
     const newAccount = new AccountEntity();
     newAccount.customerId = customerId;
@@ -50,10 +52,10 @@ export class AccountService {
    * @param {number} amount
    * @memberof AccountService
    */
-  addBalance(accountId: string, amount: number): void {
+  addBalance(accountId: string, amount: number): AccountEntity {
     const acount = this.accountRepository.findOneById(accountId)
     acount.balance += amount;
-    this.accountRepository.update(accountId, acount);
+    return this.accountRepository.update(accountId, acount);
     //Validar amount negativo
   }
 
@@ -64,13 +66,13 @@ export class AccountService {
    * @param {number} amount
    * @memberof AccountService
    */
-  removeBalance(accountId: string, amount: number): void {
+  removeBalance(accountId: string, amount: number): AccountEntity{
     const acount = this.accountRepository.findOneById(accountId)
     if(amount > acount.balance) {
       throw new Error('Not enough funds');
     }
     acount.balance -= amount;
-    this.accountRepository.update(accountId, acount);
+    return this.accountRepository.update(accountId, acount);
   }
 
   /**

@@ -1,11 +1,17 @@
-import { Controller, Delete, Get, Param, ParseUUIDPipe, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Post, Query } from '@nestjs/common';
 
-import { TransferService } from '../../../business';
+import { CreateTrasferDto, TransferService } from '../../../business';
 import { PaginationModel, DataRangeModel, TransferEntity } from '../../../data';
 
 @Controller('transfer')
 export class TransferController {
     constructor(private readonly transferService: TransferService) { }
+
+
+    @Post('create')
+    createTransfer(@Body() transfer: CreateTrasferDto): TransferEntity {
+        return this.transferService.createTransfer(transfer);
+    }
 
     @Get('getHOut/:id') 
     getHistoryOut(@Param('id', ParseUUIDPipe) accountId: string,@Query('pagination') pagination?: PaginationModel,@Query('dataRange') dataRange?: DataRangeModel): TransferEntity[] {

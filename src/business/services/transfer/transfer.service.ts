@@ -1,13 +1,15 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { AccountEntity, DataRangeModel, PaginationModel, TransferEntity, TransferRepository } from 'src/data';
+import { AccountEntity, AccountRepository, DataRangeModel, PaginationModel, TransferEntity, TransferRepository } from 'src/data';
 
 
 import { CreateTrasferDto } from '../../dtos';
+import { AccountService } from '../account';
 
 
 @Injectable()
 export class TransferService {
-  constructor(private readonly transferRepository: TransferRepository) { }
+  constructor(private readonly transferRepository: TransferRepository,
+    private readonly accountService: AccountService) { }
   /**
    * Crear una transferencia entre cuentas del banco
    *
@@ -16,17 +18,14 @@ export class TransferService {
    * @memberof TransferService
    */
   createTransfer(transfer: CreateTrasferDto): TransferEntity {
-    const accountOutcomeId = new AccountEntity
-    accountOutcomeId.id = transfer.outcome
-
-    const accountIncomeId = new AccountEntity
-    accountIncomeId.id = transfer.income
 
     const newTransfer = new TransferEntity();
-    newTransfer.outcome = accountOutcomeId;
-    newTransfer.income = accountIncomeId;
+    newTransfer.outcome = this.accountService.removeBalance(transfer.outcomeID, transfer.amount);
+    newTransfer.income = this.accountService.addBalance(transfer.incomeID, transfer.amount);
     newTransfer.amount = transfer.amount;
     newTransfer.reason = transfer.reason;
+    newTransfer.dateTime = Date.now();
+
     return this.transferRepository.register(newTransfer);
   }
 

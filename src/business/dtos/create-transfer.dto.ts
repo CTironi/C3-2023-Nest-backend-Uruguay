@@ -8,11 +8,11 @@ export class CreateTrasferDto {
 
     @IsUUID(4, { message: "This must to be uuid." })
     @IsNotEmpty({ message: "This slot must not be empty."})
-    outcome: string;
+    outcomeID: string;
 
     @IsUUID(4, { message: "This must to be uuid." })
     @IsNotEmpty({ message: "This slot must not be empty."})
-    income: string;
+    incomeID: string;
 
     @IsNumber(undefined, { message: "Not a valid format."})
     @IsNotEmpty({ message: "This slot must not be empty."})

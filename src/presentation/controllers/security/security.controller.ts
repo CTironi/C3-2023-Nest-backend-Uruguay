@@ -1,5 +1,5 @@
 // Libraries
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, Param } from '@nestjs/common';
 
 import { SecurityService } from 'src/business/services/security/security.service';
 
@@ -21,8 +21,8 @@ export class SecurityController {
         return this.securityService.signIn(signIn)
     }
 
-    @Post('signOut')
-    signOut(JWToken: string): void {
-        return this.securityService.signOut(JWToken);
+    @Post('signOut/:token')
+    signOut(@Param('token') token: string): void {
+        return this.securityService.signOut(token);
     }
 }

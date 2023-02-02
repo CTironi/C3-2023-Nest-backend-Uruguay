@@ -6,7 +6,7 @@ export interface TransferModel {
     income: AccountModel;
     amount: number;
     reason: string;
-    dateTime: Date;
+    dateTime: Date | number;
     daletedAt?: Date | number;
 
 }

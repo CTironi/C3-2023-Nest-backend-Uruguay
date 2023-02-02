@@ -4,6 +4,6 @@ export interface DepositModel {
     id: string;
     accountId: AccountModel;
     amount: number;
-    dateTime: Date;
+    dateTime: Date | number;
     daletedAt?: Date | number;
 }

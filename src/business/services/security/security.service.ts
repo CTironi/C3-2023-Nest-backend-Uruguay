@@ -76,7 +76,7 @@ import {
         const newAccount = new CreateAccountDto();
   
         newAccount.customerId = customer.id;
-        newAccount.accountTypeId = accountType.id;
+        newAccount.accountTypeId = accountType.name;
   
         const account = this.accountService.createAccount(newAccount);      
   

@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseBoolPipe, ParseUUIDPipe, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseBoolPipe, ParseFloatPipe, ParseUUIDPipe, Post, Put, Query } from '@nestjs/common';
 
 import { AccountService, CreateAccountDto } from '../../../business';
 import { AccountEntity, AccountTypeEntity } from '../../../data';
@@ -15,7 +15,8 @@ export class AccountController {
 
     @Get('getBalance/:id')
     getBalance(@Param('id', ParseUUIDPipe)  accountId: string): number {
-        return this.accountService.getBalance(accountId);
+        const balance = this.accountService.getBalance(accountId);
+        return balance;
     }
 
     @Get('getAll')
@@ -23,13 +24,13 @@ export class AccountController {
         return this.accountService.getAllAccounts();
     }
 
-    @Post('addBalance/:id')
-    addBalance(@Param('id', ParseUUIDPipe) accountId: string,@Body()  amount: number): void {
+    @Post('addBalance/:id/:amount')
+    addBalance(@Param('id', ParseUUIDPipe) accountId: string,@Param('amount', ParseFloatPipe) amount: number): AccountEntity {
         return this.accountService.addBalance(accountId, amount);
     }
 
     @Post('removeBalance/:id')
-    removeBalance(@Param('id', ParseUUIDPipe) accountId: string,@Body()  amount: number): void {
+    removeBalance(@Param('id', ParseUUIDPipe) accountId: string,@Body()  amount: number): AccountEntity {
         return this.accountService.removeBalance(accountId, amount);
     }
 
@@ -44,7 +45,7 @@ export class AccountController {
     }
 
     @Put('changeState/:id')
-    changeState(@Body() @Param('id', ParseUUIDPipe) accountId: string,@Query('state', ParseBoolPipe) state: boolean): void{
+    changeStat(@Param('id', ParseUUIDPipe) accountId: string,@Query('state', ParseBoolPipe) state: boolean): void{
         return this.accountService.changeState(accountId, state);
     }
 
