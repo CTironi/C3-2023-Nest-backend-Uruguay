@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Param, ParseUUIDPipe, Post, Put } from '@nestjs/common';
 import { CustomerService } from '../../../business';
-import { CustomerEntity, CustomerModel } from '../../../data';
+import { CustomerEntity} from '../../../data';
+import { UpdateCustomerDto } from '../../../business/dtos/update-customer.dto';
 
 
 
@@ -19,7 +20,7 @@ export class CustomerController {
     }
 
     @Put('updateCustomer/:id')
-    updatedCustomer(@Param('id', ParseUUIDPipe) id: string,@Body() customer: CustomerModel): CustomerEntity {
+    updatedCustomer(@Param('id', ParseUUIDPipe) id: string,@Body() customer: UpdateCustomerDto): CustomerEntity {
         return this.customerService.updatedCustomer(id, customer);
     }
 

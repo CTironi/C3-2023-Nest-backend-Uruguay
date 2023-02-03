@@ -1,11 +1,13 @@
-import { Injectable } from '@nestjs/common';
-import { CustomerEntity, CustomerModel, CustomerRepository } from '../../../data';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { CustomerEntity, CustomerModel, CustomerRepository, DocumentTypeRepository } from '../../../data';
+import { UpdateCustomerDto } from '../../dtos/update-customer.dto';
 
 
 
 @Injectable()
 export class CustomerService {
-  constructor(private readonly customerRepository: CustomerRepository) {}
+  constructor(private readonly customerRepository: CustomerRepository,
+    private readonly documentTypeRepository: DocumentTypeRepository) {}
   /**
    * Obtener información de un cliente
    *
@@ -29,8 +31,17 @@ export class CustomerService {
    * @return {*}  {CustomerEntity}
    * @memberof CustomerService
    */
-  updatedCustomer(id: string, customer: CustomerModel): CustomerEntity {
-    return this.customerRepository.update(id, customer);
+  updatedCustomer(id: string, customer: UpdateCustomerDto): CustomerEntity {
+    const oldCostumer = this.customerRepository.findOneById(id);
+    if (oldCostumer) {
+      oldCostumer.document = customer.document;
+      oldCostumer.email = customer.email;
+      oldCostumer.fullName = customer.fullName;
+      oldCostumer.password = customer.password;
+      oldCostumer.phone = customer.phone;
+      oldCostumer.avatarUrl = customer.avatarUrl;
+      return this.customerRepository.update(id, oldCostumer);
+    } else throw new NotFoundException();
   }
 
   /**

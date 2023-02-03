@@ -74,7 +74,7 @@ private softDelete(index: number): void {
 
   findOneById(id: string): CustomerEntity {
     const currentEntity = this.database.findIndex(
-      (itemId) => itemId.id === id && typeof itemId.daletedAt === 'undefined',
+      itemId => itemId.id === id && typeof itemId.daletedAt === 'undefined',
     );
     if(currentEntity ) return this.database[currentEntity];
     else throw new NotFoundException();
