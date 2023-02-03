@@ -32,15 +32,12 @@ export class TransferRepository
 
     delete(id: string, soft?: boolean): void {
 
-        const index = this.database.findIndex(item => item.id === id);
-
-        if(!index ) throw new NotFoundException();
-
-        if (soft) {
-            this.softDelete(index);
-        } else {
-            this.hardDelete(index);
-        }
+        let finded = this.database.findIndex(
+            (item) => 
+                item.id == id
+        );
+        if (finded == undefined) throw new NotFoundException();
+        soft ? this.softDelete(finded) : this.hardDelete(finded);
     }
 
     private hardDelete(index: number): void {

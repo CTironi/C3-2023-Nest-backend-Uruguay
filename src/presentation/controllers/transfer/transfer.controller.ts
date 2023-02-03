@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseBoolPipe, ParseUUIDPipe, Post, Query } from '@nestjs/common';
 
 import { CreateTrasferDto, TransferService } from '../../../business';
 import { PaginationModel, DataRangeModel, TransferEntity } from '../../../data';
@@ -28,9 +28,9 @@ export class TransferController {
         return this.transferService.getHistory( accountId);
     } 
 
-    @Delete('deleteTransfer/:id')
-    deleteTransfer(@Param('id', ParseUUIDPipe) transferId: string): void {
-        return this.transferService.deleteTransfer(transferId);
+    @Delete('deleteTransfer/:id/:soft')
+    deleteTransfer(@Param('id', ParseUUIDPipe) transferId: string, @Param('soft', ParseBoolPipe) soft?: boolean): void {
+        this.transferService.deleteTransfer(transferId, soft);
     }
 }
 

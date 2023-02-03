@@ -18,7 +18,7 @@ export class DepositService {
   createDeposit(deposit: CreateDepositDto): DepositEntity {
     
     const account = this.accountRepository.findOneById(deposit.accountId)
-    account.balance = deposit.amount
+    account.balance += deposit.amount 
 
     const newDeposit = new DepositEntity();
     newDeposit.accountId = account;

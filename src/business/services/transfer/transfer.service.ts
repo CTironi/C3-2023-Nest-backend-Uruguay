@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { DataRangeModel, PaginationModel, TransferEntity, TransferRepository } from '../../../data';
+import { AccountRepository, DataRangeModel, PaginationModel, TransferEntity, TransferRepository } from '../../../data';
 
 
 import { CreateTrasferDto } from '../../dtos';
@@ -10,7 +10,9 @@ import { AccountEntity } from '../../../data/persistence/entities/account.entity
 @Injectable()
 export class TransferService {
   constructor(private readonly transferRepository: TransferRepository,
-    private readonly accountService: AccountService) { }
+              private readonly accountService: AccountService,
+              private readonly accountRepository: AccountRepository
+              ) { }
   /**
    * Crear una transferencia entre cuentas del banco
    *
@@ -92,7 +94,8 @@ export class TransferService {
    * @param {string} transferId
    * @memberof TransferService
    */
-  deleteTransfer(transferId: string): void {
-    this.transferRepository.delete(transferId, true);
+  deleteTransfer(transferId: string, soft?: boolean): void {
+    if(soft) this.transferRepository.delete(transferId, soft);
+    this.accountRepository.delete(transferId);
   }
 }
