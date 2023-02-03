@@ -14,6 +14,11 @@ export class DepositController {
         return this.depositService.createDeposit(deposit);
     }
 
+    @Get('/findAll')
+    findAll(): DepositEntity[] {
+        return this.depositService.findAll();
+    }
+
     @Delete('deleteDeposit/:id')
     deleteDeposit(@Param('id', ParseUUIDPipe) depositId: string): void {
         this.depositService.deleteDeposit(depositId);

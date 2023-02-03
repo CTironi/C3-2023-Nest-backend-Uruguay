@@ -76,13 +76,9 @@ export class AccountController extends ObservableHandler{
     @Delete('deleteAccount/:id/:soft')
     deleteAccount(@Param('id', ParseUUIDPipe) accountId: string,@Param('soft', ParseBoolPipe) soft: boolean): void {
         if(this.getBalance(accountId) === 0){
-
-            this.accountRepository.delete(accountId, soft); 
-
+            this.accountRepository.delete(accountId, soft);
         }else{
-            
             throw new InternalServerErrorException("Account is not Empty!. Delete Canceled");
         }
-
         }
 }

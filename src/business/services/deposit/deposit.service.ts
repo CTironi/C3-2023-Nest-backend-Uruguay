@@ -1,10 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
-import { AccountEntity, DataRangeModel, DepositEntity, DepositRepository, PaginationModel } from '../../../data';
+import { DataRangeModel, DepositEntity, DepositRepository, PaginationModel, AccountRepository } from '../../../data';
 import { CreateDepositDto } from '../../dtos';
-import { AccountService } from '../account';
-import { AccountRepository } from '../../../data/persistence/repositories/account.repository';
-
 
 @Injectable()
 export class DepositService {
@@ -29,6 +26,10 @@ export class DepositService {
 
     return this.depositRepository.register(newDeposit);
 
+  }
+
+  findAll(): DepositEntity[] {
+    return this.depositRepository.findAll();
   }
 
   /**
