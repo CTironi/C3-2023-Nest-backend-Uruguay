@@ -4,6 +4,7 @@ import { DataRangeModel, PaginationModel, TransferEntity, TransferRepository } f
 
 import { CreateTrasferDto } from '../../dtos';
 import { AccountService } from '../account';
+import { AccountEntity } from '../../../data/persistence/entities/account.entity';
 
 
 @Injectable()
@@ -80,10 +81,9 @@ export class TransferService {
     pagination?: PaginationModel,
     dataRange?: DataRangeModel,
   ): TransferEntity[] {
-    if (dataRange){
-      return this.transferRepository.findIncomeByDataRange(accountId, dataRange.dataInit, dataRange.dataFinal)
-      .concat(this.transferRepository.findOutcomeByDataRange(accountId, dataRange.dataInit, dataRange.dataFinal));
-    } throw new NotFoundException()
+    let history: Array<TransferEntity> = []
+    history = this.transferRepository.findByAccountId(accountId);
+    return history;
   }
 
   /**

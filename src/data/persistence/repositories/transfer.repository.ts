@@ -104,4 +104,12 @@ export class TransferRepository
         if(!currentEntity ) throw new NotFoundException();
         return currentEntity;
     }
+
+    findByAccountId(accountId: string): TransferEntity[] {
+        const currentEntity = this.database.filter(
+            (itemId) => itemId.income.id === accountId || itemId.outcome.id === accountId,
+        );
+        if (!currentEntity) throw new NotFoundException();
+        return currentEntity;
+    }
 }

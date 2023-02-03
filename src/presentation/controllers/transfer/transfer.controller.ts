@@ -24,8 +24,8 @@ export class TransferController {
     }
 
     @Get('getHistory/:id')
-    getHistory(@Param('id', ParseUUIDPipe) accountId: string,@Query('pagination') pagination: PaginationModel,@Query('dataRange') dataRange?: DataRangeModel): TransferEntity[] {
-        return this.transferService.getHistory( accountId, pagination, dataRange );
+    getHistory(@Param('id', ParseUUIDPipe) accountId: string): TransferEntity[] {
+        return this.transferService.getHistory( accountId);
     } 
 
     @Delete('deleteTransfer/:id')
