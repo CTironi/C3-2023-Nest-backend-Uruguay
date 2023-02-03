@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Post, ParseBoolPipe } from '@nestjs/common';
 
 import { DepositService, CreateDepositDto } from '../../../business';
 import { DepositEntity } from '../../../data';
@@ -19,9 +19,9 @@ export class DepositController {
         return this.depositService.findAll();
     }
 
-    @Delete('deleteDeposit/:id')
-    deleteDeposit(@Param('id', ParseUUIDPipe) depositId: string): void {
-        this.depositService.deleteDeposit(depositId);
+    @Delete('deleteDeposit/:id/:soft')
+    deleteDeposit(@Param('id', ParseUUIDPipe) depositId: string, @Param('soft', ParseBoolPipe) soft?: boolean ): void {
+        this.depositService.deleteDeposit(depositId, soft);
     }
 
     @Get('getHistory/:id')
