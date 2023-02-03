@@ -73,11 +73,12 @@ private softDelete(index: number): void {
   }
 
   findOneById(id: string): CustomerEntity {
-    const currentEntity = this.database.find(
+    const currentEntity = this.database.findIndex(
       (itemId) => itemId.id === id && typeof itemId.daletedAt === 'undefined',
     );
-    if(!currentEntity ) throw new NotFoundException();
-    return currentEntity;
+    if(currentEntity ) return this.database[currentEntity];
+    else throw new NotFoundException();
+    
   }
 
   findOneByEmailAndPassword(email: string, password: string): boolean {
