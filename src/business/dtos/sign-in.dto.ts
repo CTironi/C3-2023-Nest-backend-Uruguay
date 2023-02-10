@@ -4,7 +4,7 @@ export class SignInDto {
 
     @IsEmail(undefined, { message: 'the data provider is not a valid email.' })
     @IsString()
-    username: string;
+    email: string;
 
     @IsNotEmpty({ message: 'the password is required.' })
     @IsString()

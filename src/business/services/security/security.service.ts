@@ -42,7 +42,7 @@ import {
      */
     signIn(user: SignInDto): string {
       const answer = this.customerRepository.findOneByEmailAndPassword(
-        user.username,
+        user.email,
         user.password,
       );
       if (answer) return this.jwtService.sign(user, { secret: "Sofka", expiresIn: "30d" });

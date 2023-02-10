@@ -1,0 +1,545 @@
+{
+	"info": {
+		"_postman_id": "2dea0821-b814-442f-8598-a7bf3e38e028",
+		"name": "NEST-Backend-MicroBanco",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22974624"
+	},
+	"item": [
+		{
+			"name": "Security",
+			"item": [
+				{
+					"name": "SignOut",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"juanpe@mail.com\",\r\n    \"password\": \"aaaaav\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/security/signout/",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"security",
+								"signout",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SignUp - Register New User/Create new Account",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"documentTypeId\":\"ee2252d8-caf6-41f0-89d1-3f1b36b665f8\",\r\n    \"document\":\"13456789\",\r\n    \"fullname\":\"Juan Perez\",\r\n    \"email\":\"juanpe@mail.com\",\r\n    \"phone\":\"132456\",\r\n    \"password\":\"aaaaav\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/security/signUp",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"security",
+								"signUp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SignIn",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"juanpe@mail.com\",\r\n    \"password\": \"aaaaav\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/security/signIn",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"security",
+								"signIn"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Account",
+			"item": [
+				{
+					"name": "Create Account",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"customerId\": \"7fcf609c-ead4-4124-8e7e-5dc0f773c121\",\r\n    \"name\": \"Caja de ahorros\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/account/createAccount",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"account",
+								"createAccount"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get List of Accounts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/account/getAll",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"account",
+								"getAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Account Balance",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/account/getBalance/e92c3096-020f-4ea9-8fd4-b9eac4e335de",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"account",
+								"getBalance",
+								"e92c3096-020f-4ea9-8fd4-b9eac4e335de"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Balance To Account",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"amount\":100\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/account/addBalance/b819b17b-24bf-4899-b923-0dbaff553160/4000",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"account",
+								"addBalance",
+								"b819b17b-24bf-4899-b923-0dbaff553160",
+								"4000"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Balance From Account",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/account/removeBalance/639f60b8-16d7-4af9-9ca0-38d9f78f1fdd/1000",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"account",
+								"removeBalance",
+								"639f60b8-16d7-4af9-9ca0-38d9f78f1fdd",
+								"1000"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify amount",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/account/verifyAmount/9dab59b9-0b7e-4c92-bac3-be364a49db00/300",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"account",
+								"verifyAmount",
+								"9dab59b9-0b7e-4c92-bac3-be364a49db00",
+								"300"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Account",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/account/deleteAccount/f8e935bd-ff55-4291-b84c-5d1a51aa9fb2/false",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"account",
+								"deleteAccount",
+								"f8e935bd-ff55-4291-b84c-5d1a51aa9fb2",
+								"false"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Customer",
+			"item": [
+				{
+					"name": "Get List of Customer",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/customer/getAll",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"customer",
+								"getAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Customer Information",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/customer/getCustomer/7fcf609c-ead4-4124-8e7e-5dc0f773c121",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"customer",
+								"getCustomer",
+								"7fcf609c-ead4-4124-8e7e-5dc0f773c121"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Customer",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{    \r\n    \"document\": \"\",    \r\n    \"fullname\":\"\",\r\n    \"email\":\"\",\r\n    \"phone\":\"\",      \r\n    \"password\":\"\",\r\n    \"state\": true,   \r\n    \"avatarUrl\": \"string;\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/customer/updateCustomer/105143fb-ac62-440f-ab51-25a008b94c6c",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"customer",
+								"updateCustomer",
+								"105143fb-ac62-440f-ab51-25a008b94c6c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unsubscribe Customer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/customer/unsubscribe/ba606149-151f-4e9e-86b3-27c809d8473c",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"customer",
+								"unsubscribe",
+								"ba606149-151f-4e9e-86b3-27c809d8473c"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Deposit",
+			"item": [
+				{
+					"name": "Create Deposit",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"accountId\": \"\",\r\n    \"amount\":250\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/deposit/createDeposit",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"deposit",
+								"createDeposit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all Deposit",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/deposit/findAll",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"deposit",
+								"findAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Deposit",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/deposit/deleteDeposit/9c8c13f7-068c-4768-89e1-e4111d571363/true",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"deposit",
+								"deleteDeposit",
+								"9c8c13f7-068c-4768-89e1-e4111d571363",
+								"true"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get History Deposit",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/deposit/getHistory/:idaccount",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"deposit",
+								"getHistory",
+								":idaccount"
+							],
+							"variable": [
+								{
+									"key": "idaccount",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Transfer",
+			"item": [
+				{
+					"name": "Create a Transfer between Accounts",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"outcomeID\":\"b819b17b-24bf-4899-b923-0dbaff553160\",\r\n    \"incomeID\":\"daeb7875-0af7-47b7-90fe-6718bf74ccb1\",\r\n    \"amount\":1000,\r\n    \"reason\":\"pagando favores\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/transfer/create",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"transfer",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all Transfers for an account",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/transfer/getHistory/28b3dee2-9f35-48db-a379-3d0e94bdded7",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"transfer",
+								"getHistory",
+								"28b3dee2-9f35-48db-a379-3d0e94bdded7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete transfer",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/transfer/deleteTransfer/c6bf7cdc-621e-4eff-b13a-abb89c47be17/true",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"transfer",
+								"deleteTransfer",
+								"c6bf7cdc-621e-4eff-b13a-abb89c47be17",
+								"true"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
