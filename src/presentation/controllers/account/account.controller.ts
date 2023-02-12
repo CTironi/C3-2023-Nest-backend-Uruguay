@@ -38,6 +38,11 @@ export class AccountController extends ObservableHandler{
         return this.accountService.getAllAccounts();
     }
 
+    @Get('/getByCustomerId/:id')
+    getAccountByCostumerId(@Param('id') customer: string): AccountEntity[] {
+        return this.accountService.getAccountByCustomerId(customer);
+    }
+
     @Post('addBalance/:id/:amount')
     addBalance(@Param('id', ParseUUIDPipe) accountId: string,@Param('amount', ParseFloatPipe) amount: number): AccountEntity {
         return this.accountService.addBalance(accountId, amount);

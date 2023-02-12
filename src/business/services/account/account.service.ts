@@ -166,4 +166,9 @@ export class AccountService {
     if(soft) this.accountRepository.delete(accountId, soft);
     this.accountRepository.delete(accountId);
   }
+
+  getAccountByCustomerId(customerId: string): AccountEntity[] {
+
+    return this.accountRepository.findByCustomer(customerId);
+}
 }
