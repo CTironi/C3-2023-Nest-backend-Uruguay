@@ -2,9 +2,8 @@ import { IsEmail,IsNumberString, IsUUID, IsString, Matches, Min, IsNotEmpty } fr
 
 export class SignUpDto {
 
-    @IsUUID(4, { message: "this must to be uuid" })
     @IsNotEmpty({ message: "This slot must not be empty."})
-    documentTypeId: string;
+    documentTypeName: string;
 
     @IsNumberString()
     @IsNotEmpty({ message: "This slot must not be empty."})

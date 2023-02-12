@@ -58,7 +58,7 @@ import {
      */
     signUp(user: SignUpDto): string {
       const documentType = new DocumentTypeEntity()
-      documentType.id = user.documentTypeId;
+      documentType.name = user.documentTypeName;
       
       const newCustomer = new CustomerEntity();
       newCustomer.documentType = documentType;
